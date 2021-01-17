@@ -11,7 +11,6 @@ public class GameMainManager : MonoBehaviour
     public PlayableDirector _event1director;
     public GameObject _player;
     public GameObject _enemy;
-
     public GameObject _timeUI;
     private GameObject _timeUIinst;
     public GameObject _timeIcon;
@@ -19,6 +18,8 @@ public class GameMainManager : MonoBehaviour
     public GameObject _lifeIcon;
 
     public GameObject _menuIcon;
+
+    public GameObject _navMeshTilemap;
 
     private List<GameObject> _playerLifes;
 
@@ -85,6 +86,9 @@ public class GameMainManager : MonoBehaviour
             _playerLifes[i].transform.position = new Vector3( 60 + i * 40, 480, 0);
             
         }
+
+        _navMeshTilemap.GetComponent<Collider2D>().enabled = false;
+        _enemy.GetComponent<Enemy>().NavMeshAgent.GetComponent<NavMeshAgent>().enabled = true;
     }
 
     void OnEnable()

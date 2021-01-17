@@ -17,7 +17,7 @@ public class TimeUI : MonoBehaviour
         _TimeText = GetComponent<Text>();
 
         // タイマ初期化
-        _Timer = 10;
+        _Timer = 60;
         TimeOver = false;
     }
 

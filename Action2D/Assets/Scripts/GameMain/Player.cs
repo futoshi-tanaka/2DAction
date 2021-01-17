@@ -21,12 +21,15 @@ public class Player : MonoBehaviour
     private bool                m_rolling = false;
     private int                 m_facingDirection = 1;
     private int                 m_currentAttack = 0;
-    private float               m_timeSinceAttack = 0.0f;
+    private float               m_timeSinceAttack = 0.26f;
     private float               m_delayToIdle = 0.0f;
 
     private bool                m_death;               // 死亡フラグ
 
     public int                  Life { get; set; }   // ライフ
+
+    public GameObject           _AttackHitBox;
+    public List<GameObject>     _AttackHitBoxList;
 
     // Use this for initialization
     void Start ()
@@ -41,6 +44,8 @@ public class Player : MonoBehaviour
 
         m_death = false;
         Life = 3;
+
+        _AttackHitBoxList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -169,6 +174,24 @@ public class Player : MonoBehaviour
             m_delayToIdle -= Time.deltaTime;
                 if(m_delayToIdle < 0)
                     m_animator.SetInteger("AnimState", 0);
+        }
+
+        if(m_timeSinceAttack == 0.0f)
+        {
+            _AttackHitBoxList.Add(Instantiate(_AttackHitBox));
+            var x = 2.0f;
+            if(transform.forward.x < 0)
+            {
+                x = -2.0f;
+            }
+            _AttackHitBoxList[_AttackHitBoxList.Count-1].transform.position = new Vector3(transform.position.x + x, transform.position.y + 2.0f, transform.position.z);
+        }
+        else if(m_timeSinceAttack > 0.25f)
+        {
+            for(int i = 0; i < _AttackHitBoxList.Count; i++)
+            {
+                Destroy(_AttackHitBoxList[i]);
+            }
         }
     }
 
